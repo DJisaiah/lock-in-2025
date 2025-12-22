@@ -4,6 +4,7 @@
 #### The simple hello world
 ```C
 #include <stdio.h> // std lib for io
+// preprocessor directive basically an import of a file
 #include <stdlib.h> // std lib for declarations for general utility funcs
 int main(void) {
     puts("Hello world or bob"); // equivalent to print in python 
