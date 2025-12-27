@@ -83,14 +83,30 @@
 - Fiedler's Theorem
     - This is used to partition a graph in such a way that minimises the number of edges cut
         - think if you had to cut this manually in a big network you would end up cutting other places to get a clean cut (because you wouldnt know the cleanest spot)
-    - Used on undirected graphs
+    - If we used this on the crime network example, we would partition the network on the basis of which subgroups were the most connected
+        - Another way to think of this is to partitio of the basis of internal connectedness and external sparseness
+    - Used on undirected graphs (prereq)
         - Symmetric matrices are guaranteed to have real eigenvalues this allows neat ordering
             - Think about how if they were real/complex it would be difficult saying which is bigger/smaller
+            - **Though there do exist spectral clustering techniques for directed graphs**
+        - If you must work with a directed graph with fiedler's theorem:
+            - You have two options:
+                1. convert the directed graph into it's Gramian Matrix ($S = AA^T$)
+                    - Idea for the usage here is "if we follow the same people we belong together"
+                    - More comp heavy as it's matrix multiplication
+                2. its summation/*Symmetrized Adjacency Matrix* ($S = A + A^T$)
+                    - Idea for the usage here is "if we have an interaction we should be grouped together"
+                    - The summation turns an directed graph into an undirected graph
+                    - Computationly easier
+            - **both options allow us to work with a symmetric matrix which is the prereq for fiedler's thm**
+                - Simple algebraic proof for both (Prove $S = S^T$ to prove symmetry) 
     - Thm itself:
         - $x$: The Fiedler Vector (the whole array).
+            - We get this through the standard process of $Lx = \lambda_2x$
+                - Recall that this is the same as $(L-\lambda_2 I)x = 0$
 
         - $j$ (or $i$): The index/ID of a specific vertex.
 
         - $x_j$: The "Valuation" (the actual number at that index).
 
-        - The Rule: If the valuation is negative, the vertex belongs to Subgraph 1 ($G_1$). Otherwise, it belongs to Subgraph 2 ($G_2$).
+        - The Rule: If the valuation ($x_j$) is negative, the vertex belongs to Subgraph 1 ($G_1$). Otherwise, it belongs to Subgraph 2 ($G_2$).
