@@ -38,4 +38,16 @@
             - This is what the gate builder what look at. It shows the inner workings
 - The abstraction we have on logic gates is thanks to a masters thesis by Claude Shannon
     - Allows us to develop without the worry of nature
+- The interface of any gate is unique
+    - | Term | Status | Why? |
+        | :--- | :--- | :--- |
+        | **The Gate Interface** | **Unique** | It is the fixed contract of inputs $\rightarrow$ outputs (The Truth Table). |
+        | **Boolean Expressions** | **Not Unique** | There are many ways to write the rule that results in that Truth Table. |
+        | **Gate Implementations** | **Not Unique** | There are many ways to physically wire the gates to satisfy the expression. |
+---
+### Hardware Construction
 
+- We use HDL (hardware description language) to design our chips rather than doing it by hand
+    - Doing it by hand for complex cases can be quite hard to test
+        - Using hdl (with a hardware simulator) we can simulate efficiency and cost
+        - and then once we/a client are/is satsified with the chip they can be sent for physical production
