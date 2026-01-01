@@ -110,3 +110,18 @@
         - $x_j$: The "Valuation" (the actual number at that index).
 
         - The Rule: If the valuation ($x_j$) is negative, the vertex belongs to Subgraph 1 ($G_1$). Otherwise, it belongs to Subgraph 2 ($G_2$).
+
+- Quadratic form of a symmetric* matrix:
+    1. $x^TAx$
+    2. *
+- A real $n * n$ symmetric matrix is called:
+    1. Positive definite
+    2. Positive semidefinite
+    3. Negative definite
+    4. Negative semidefinite
+
+- If A is an $n * n$ real positive semi-definite matrix, all the eigenvalues are non-negative
+
+- Steady State Vector
+    - *In math if there's a value $x$ for a function where $f(x) = x$, we call that the steady state value*
+    - 
