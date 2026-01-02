@@ -137,13 +137,72 @@ An object is a place in storage during execution in which you can store values
 
 - Arrays
     - contigously allocated sequence of objects that all have the same type
-        - ```C
-        int array1[17]; // int array with 17 elements
-        int *array2[13]; // pointer to int array with 13 elements
-        int array3[i][j]; // matrices can be formed nicely
+        - 
+        ```C
+            int array1[17]; // int array with 17 elements
+            int *array2[13]; // pointer to int array with 13 elements
+            int array3[i][j]; // matrices can be formed nicely
         ```
 
 * you can use `typedef` to create an alias for an existing type
+    - also useful in treating non-types like types
+        - helps in code reability
 
 - structs
     - ancestor of classes
+    - ```C
+        struct somestruct {
+            int somemember;
+            int anothermember
+        };
+
+        struct somestruct examplestruct;       // Declare the object here
+        struct somestruct *examplestruct_p;    // Declare the pointer here
+
+        ```
+        - shorthand:
+            - ```C
+                struct somestruct {
+                    int somemember;
+                } examplestruct, *examplestruct_p;
+                ```
+            - *the shorthand is useful for anonymous structs*
+                - pointer arg at end is optional
+    - can access members via dot operator (access to object)
+        - if working with pointer can access with structure pointer operator (`->`)
+    - each member is stacked one after the other in memory
+
+- union
+    - how this works:
+        - when you declare a union, it reserves the largest type required memory
+        - so even if you declare multiple members they still sit in that one memory address (start at it to be accurate)
+    - generally used in cases where there are restrictions on memory
+    - 
+        ```C
+            union Simple {
+                int i;
+                char c;
+            };
+
+            union Simple s;
+            s.i = 65; // '65' is the ASCII code for 'A'
+            printf("%c", s.c); // This will print 'A' because they share memory.
+        ```
+        - you could also put structs in unions but the principles still apply
+        - when you overwrite a member, that member overwrites it's respective bits starting at that address
+
+- tags
+    - special naming mechanism for structs, unions, and enums
+        - *the names of structs/unions/enums arent types and cannot alone be used to declare variables*
+    - tags exist in a different namespace from regular identifiers
+        - this implies you can have identifiers and tags with the same name
+    - we can use typedef to define an alias for tags to treat them like types
+
+### Type Qualifiers
+
+*without these qualifiers, the type is considered unqualified*
+
+Types can be qualified with the following qualifiers:
+    - const
+    - volatile
+    - restrict

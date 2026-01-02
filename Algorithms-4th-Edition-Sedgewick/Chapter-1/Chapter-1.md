@@ -35,7 +35,21 @@
                     - do: `FixedStack<Integer>` and NOT `FixedStack<int>`
                         - the automatic promotion is called *AutoBoxing*
 
-##### Iterable collections
-- We often want our clients to be able to iterate through the collections (through something like a for-each loop)
+##### Iterable collections `import java.util.Iterator;`
+* An iterator is an object from a class that implements the methods `hasNext()` and `next()`
+    - you can see that definition in the `Iterable` interface
+    - *there is also a `remove()` method that needs to be implemented but we leave it blank for safety
+
+```Java
+private class ArrayIterator implements Iterator<Item> {
+    private int i = 0;
+
+    public boolean hasNext() { return i < N; }
+    public Item next() { return a[++i]; }
+    public void remove() { }
+}
+```
+*this is mostly for, for-each loop*
 
 ---
+*to come back to

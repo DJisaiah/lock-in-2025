@@ -21,6 +21,7 @@
     - Sequence of edges that link a pair of vertices
 - Connected graph
     - A graph where there is a path between every pair of vertices
+        - a simple connected graph **cannot** have loops (not cycles)
 - Tree graph
     - Connected but no path back to the same vertex
 - In-degree
@@ -124,4 +125,45 @@
 
 - Steady State Vector
     - *In math if there's a value $x$ for a function where $f(x) = x$, we call that the steady state value*
-    - 
+    - if $\lambda = 1$, there exists a positive integer k where $A^kx = x$
+        - since the value of x remains fixed despite being multiplied by A, we call this the *steady state vector*
+
+- Spectral Theorem
+    - If A is $n * n$ real symmetric matrix we can decompose it into $A = U \Lambda U^T$
+        - $\Lambda$: Diagonal matrix with each diagonal entry corresponding to $\lambda_i$
+        - $U$: Columns of U are orthonormal bases vectors for the corresponding eigenspaces of A
+
+//
+
+---
+### Chapter 1.6 Exercises
+
+**1**-
+<br>
+a. 2
+<br>
+b. 
+$$
+A^2 = \begin{pmatrix} 
+2 & 1 & 1 & 1 & 2 & 1 \\
+1 & 4 & 1 & 1 & 2 & 1 \\
+1 & 1 & 2 & 2 & 0 & 2 \\
+1 & 1 & 2 & 3 & 0 & 2 \\
+2 & 2 & 0 & 0 & 3 & 0 \\
+1 & 1 & 2 & 2 & 0 & 2
+\end{pmatrix}
+$$
+
+2-step connections to others from kush: $1 + 1 + 1+ 1 + 1 = 6$
+
+*row/col 1 excluding kash ("others") himself. Consider the 2 as 1 in sum since it is just a connection to one person*
+<br>
+c. 
+1-step = 1
+
+2-step = 1
+
+*since undirected graph (by way of the symm. adj. matrix) we usually count the one link as one. We're counting unique physical connections*
+<br>
+**2-**
+![q2](media/q2.jpg)

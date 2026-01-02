@@ -51,3 +51,96 @@
     - Doing it by hand for complex cases can be quite hard to test
         - Using hdl (with a hardware simulator) we can simulate efficiency and cost
         - and then once we/a client are/is satsified with the chip they can be sent for physical production
+
+---
+### Specification
+
+- Multiplexor
+    - Basically a selector
+        - given various inputs, decide which one becomes the ouput based on a condition (the selector)
+
+- Demultiplexor
+    - Basically the opposite of a multiplexor
+        - given one input, decide which output gets that input based on a condition (the selector)
+
+- Inputs are interpreted as data bits. Selection as a selection bit*
+
+- HDL programs index bits from right to left (rightmost is 0th bit)
+
+- Multi-bit gates are basically just expanding the array of an input 
+    - it would still be one input say `a` but the number of bits has increased (8, 16...)
+
+- We can realise our gates:
+    1. with a boolean function in a truth table (for our simpler cases)
+    2. In API style
+        - Chip name
+        - Input
+        - Output
+        - Function
+
+---
+### Project 1
+
+* Important to realise that you are building a real object with electrical capabilities. 
+
+- Not
+    - Simply just bind both inputs to the one
+    - ```HDL
+        CHIP Not {
+            IN in;
+            OUT out;
+
+            PARTS:
+            Nand(a=in , b=in , out=out);
+        }
+
+        ```
+
+- And
+    - `Simply Not(Nand(a,b))`
+    - 
+        ```HDL
+        CHIP And {
+            IN a, b;
+            OUT out;
+            
+            PARTS:
+            Nand(a=a, b=b, out=res1);
+            Not(in= res1, out=out);
+        }
+
+        ```
+
+- Or
+    - `Not(And(Not(a), Not(b)))`
+        - Naturally can also use `Nand(Not(a), Not(b))`
+    - 
+    ```HDL
+        CHIP Or {
+            IN a, b;
+            OUT out;
+
+            PARTS:
+            Not(in=a, out=nota );
+            Not(in=b, out=notb );
+            And(a=nota , b=notb , out=andnotanotb );
+            Not(in=andnotanotb, out=out );
+        }
+    ```
+
+- Xor
+    - `And(Not( And(a , b)), Or(a , b))`
+    - 
+        ```HDL
+            CHIP Xor {
+                IN a, b;
+                OUT out;
+
+                PARTS:
+                Or(a=a, b=b, out=aorb);
+                And(a=a, b=b, out=aandb);
+                Not(in=aandb, out=notaandb);
+                And(a=notaandb, b=aorb, out=out);
+            }
+
+        ```
