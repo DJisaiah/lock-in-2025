@@ -51,5 +51,30 @@ private class ArrayIterator implements Iterator<Item> {
 ```
 *this is mostly for, for-each loop*
 
+#### Comparable
+
+- In Java we're able to make use of interfaces as types (not when instantiating)
+    - this allows us polymorphism
+    - for example you can have arrays of type Comparable
+        - this allows us to sort whatever types in our algorithms for example
+
+- Comparable interface
+    - Requires a compareTo method
+        - 
+        ```Java
+                public class Player implements Comparable<Player> {
+                    private int score;
+                    private String name;
+
+                    // Constructor and getters...
+
+                    @Override // optional; we use it as a safety measure for mispells or others
+                    public int compareTo(Player other) {
+                        // Natural ordering: ascending order by score
+                        return Integer.compare(this.score, other.score);
+                    }
+                }
+        ```
+
 ---
 *to come back to

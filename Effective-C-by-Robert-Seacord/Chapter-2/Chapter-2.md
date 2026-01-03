@@ -202,7 +202,30 @@ An object is a place in storage during execution in which you can store values
 
 *without these qualifiers, the type is considered unqualified*
 
-Types can be qualified with the following qualifiers:
+- Types can be qualified with the following qualifiers:
     - const
+        - objects declared with this type are not modifiable
+            - there is a way around this if the original object was not const declared, and you const qualify a pointer to the object
+                - cast back to regular pointer to int
     - volatile
+        - signals to the compile that the value of a variable can change at any moment even if the program itself hasnt actually touched it
+            - when addresses are connected to real-world devices/sensors
+        - understanding why:
+            - Modern C compilers are designed to be extremely "smart" and optimize your code to make it run faster.
+            ```C
+                int sensor = 10;
+                while (sensor == 10) {
+                    // do nothing, just wait for sensor to change
+                }
+            ```
+            - The compiler looks at that and thinks: "Wait, nothing inside this loop changes 'sensor'. Therefore, it will stay 10 forever. I'll just optimize this into an infinite loop so I don't have to keep checking RAM".
+            - if the sensor is actually some physical hardware, the compiler has just broken your program
+        - "i must never cache this, always check new value in ram"
     - restrict
+        - a promise to the compiler that there is no aliasing on this pointer
+            - aliasing refers to having multiple pointers refer to the same point in memory
+        - if this qualifier isnt passed the compiler will be scared to do heavy optimisations
+            - heavy optimisations such as caching data in much faster cpu cache than ram
+            - simply having two non-restricted pointers is enough chance for them to point to the same spot in memory
+        - this is just a promise. if you break it the ownace is on you
+            - garbage data and undefined behaviour

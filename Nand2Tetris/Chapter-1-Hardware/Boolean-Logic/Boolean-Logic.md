@@ -144,3 +144,6 @@
             }
 
         ```
+
+- Multiplexor
+currently have mechanism for selecting b and getting b just struggling to connect
