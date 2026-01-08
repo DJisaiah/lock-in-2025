@@ -147,3 +147,4 @@
 
 - Multiplexor
 currently have mechanism for selecting b and getting b just struggling to connect
+maybe think along the lines of 4 cases/states (2 possible outputs, 2 selector inputs)

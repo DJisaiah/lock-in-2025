@@ -59,8 +59,9 @@
     - Since many vectors can be used as the basis vector we stick to unit eigenvectors
 
 - Laplacian Matrix
-    - Degrees along diagonal
-    - -adjacency otherwise
+    - $D - A$
+        - Degrees along diagonal
+        - -adjacency otherwise
         - Normalised Laplacian
             - L = TLT
                 - where T is 1/sqrt(degree_at_pos)
@@ -167,3 +168,44 @@ c.
 <br>
 **2-**
 ![q2](media/q2.jpg)
+
+**3-**
+Not a simple connected graph as there is a self-loop at $A_{11}$
+
+*can also use laplacian; if $\lambda = 0$ -> multiplicity = 1 -> connected*
+
+**4-**
+
+**a**
+$$
+A = \begin{pmatrix}
+0 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 \\
+1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 \\
+1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0
+\end{pmatrix}
+$$
+
+**b**
+$$
+A = \begin{pmatrix}
+0 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 \\
+1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 \\
+1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0
+\end{pmatrix}
+$$
+
+// left off at solving 4c with numpy
