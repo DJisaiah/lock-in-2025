@@ -75,6 +75,11 @@ private class ArrayIterator implements Iterator<Item> {
                     }
                 }
         ```
+#### Big O Notation and (~) Tilde Notation
+- tilde notation focuses on being precise on how an algorithm performs by measuring both comparisons and exchanges (keeping em separate)
+    - do note that tilde notation ignores constants
+- big o notation focuses on how the algorithm scales (in regards to the most impactful term)
+    - this means big o can refer to both comparisons and exchanges
 
 ---
 *to come back to

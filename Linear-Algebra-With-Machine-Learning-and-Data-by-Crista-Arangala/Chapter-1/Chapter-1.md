@@ -80,6 +80,17 @@
                         - If the rhs is 0, we know there is always a **non-trivial** solution in col vector of 1's
                             - *Recall that the sum of a row in a Laplacian matrix is 0* (by way of degrees and edges)
                             - We never allow $x$ to be the null vector in said equation as it **doesnt teach us anything**
+            - the fiedler value has useful properties as well
+                - note we compare $\lambda_2$ to the max degree of our laplacian
+                - it tells us how easy it is to break the graph into two pieces
+                    - $\lambda_2 = 0$ 
+                        - the graph is already broken (disconnected)
+                    - $\lambda_2$ is small
+                        - the graph is technically connected but "fragile" -> this implies a bottleneck.
+                            - a small number of edges holding large groups together
+                    - $\lambda_2$ is large
+                        - the graph is stiff and well-knit
+                            - there are no easy places to cut it without losing many edges
             - The more the graph is connected the bigger the fiedler value
 
 - Fiedler's Theorem
@@ -174,9 +185,10 @@ Not a simple connected graph as there is a self-loop at $A_{11}$
 
 *can also use laplacian; if $\lambda = 0$ -> multiplicity = 1 -> connected*
 
-**4-**
+#### 4
 
-**a**
+##### a
+
 $$
 A = \begin{pmatrix}
 0 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 \\
@@ -192,20 +204,71 @@ A = \begin{pmatrix}
 \end{pmatrix}
 $$
 
-**b**
+##### b
+
 $$
-A = \begin{pmatrix}
-0 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 \\
-1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 \\
-1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
-1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 1 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0
+L = \begin{pmatrix}
+3 & -1 & 0 & 0 & 0 & 0 & -1 & -1 & 0 & 0 \\
+-1 & 2 & -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & -1 & 2 & -1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & -1 & 2 & -1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & -1 & 2 & -1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & -1 & 2 & -1 & 0 & 0 & 0 \\
+-1 & 0 & 0 & 0 & 0 & -1 & 2 & 0 & 0 & 0 \\
+-1 & 0 & 0 & 0 & 0 & 0 & 0 & 3 & -1 & -1 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & -1 & 2 & -1 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & -1 & -1 & 2
 \end{pmatrix}
 $$
 
-// left off at solving 4c with numpy
+##### c
+
+```python
+import numpy as np
+
+L = np.array([
+    [ 3, -1,  0,  0,  0,  0, -1, -1,  0,  0],
+    [-1,  2, -1,  0,  0,  0,  0,  0,  0,  0],
+    [ 0, -1,  2, -1,  0,  0,  0,  0,  0,  0],
+    [ 0,  0, -1,  2, -1,  0,  0,  0,  0,  0],
+    [ 0,  0,  0, -1,  2, -1,  0,  0,  0,  0],
+    [ 0,  0,  0,  0, -1,  2, -1,  0,  0,  0],
+    [-1,  0,  0,  0,  0, -1,  2,  0,  0,  0],
+    [-1,  0,  0,  0,  0,  0,  0,  3, -1, -1],
+    [ 0,  0,  0,  0,  0,  0,  0, -1,  2, -1],
+    [ 0,  0,  0,  0,  0,  0,  0, -1, -1,  2]
+])
+
+# if we had use .eig instead eigh we wouldve had to use argsort
+# eigh can be used for symmetric matrices and is much faster than the general purpose eig
+eigenvalues, eigenvectors = np.linalg.eigh(L)
+
+fiedler_value = eigenvalues[1]
+# we use : here to tell numpy we want all the values in that row of that column vs us doing it manually with loops
+fiedler_vector = eigenvectors[:, 1]
+
+print(f"fiedler value is {fiedler_value}, fiedlervector is {fiedler_vector}")
+```
+
+fiedler value is $0.23748729117013237$
+
+fiedler vector is:
+
+$$
+\mathbf{v} = \begin{pmatrix}
+-0.05213393 \\
+0.11470829 \\
+0.25430876 \\
+0.33351412 \\
+0.33351412 \\
+0.25430876 \\
+0.11470829 \\
+-0.37343723 \\
+-0.48974559 \\
+-0.48974559
+\end{pmatrix}
+$$
+
+
+#### 5
+

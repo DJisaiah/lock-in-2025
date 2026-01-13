@@ -29,3 +29,18 @@
 - Precision
     - number of bits used to represent values
         - excludes sign and padding bits
+
+#### <limits.h> header file
+- the limits header file specifies the min/max/width of integer types for our use
+    - it is determined by the compiler based on our architecture
+        - instead of harcoded values being used it's smarter to adapt these values on arch (compiler developer)
+        - if hardcoded code wouldn't port properly on different archs (64bit to 16bit)
+            - programs could crash or behave unexpectedly in an effort to adapt
+    - the C standard imposes 3 rules on this
+        - not following them could lead to issues in our programs
+
+#### Declaring Integers
+- integer types are implictly declared signed unless prepended otherwise
+    - except for char
+        - C allows the compiler creator to decide whether char is signed or unsigned by default
+        - compiler **must** treat it as signed otherwise
