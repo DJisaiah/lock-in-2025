@@ -146,5 +146,24 @@
         ```
 
 - Multiplexor
-currently have mechanism for selecting b and getting b just struggling to connect
-maybe think along the lines of 4 cases/states (2 possible outputs, 2 selector inputs)
+    - It was remarkably easier to think of a programming language solution to this than focus entirely on truth table and splits
+        - although we first had to split up this into cases to actually see that solution
+            1. sel = 0 -> a = 1 -> out = 1
+            2. sel = 1 -> b = 1 -> out = 1
+            3. sel = 0 -> a = 0 -> out = 0
+            4. sel = 1 -> b = 0 -> out = 0
+        - `out = (a && !sel) || (b && sel)`
+    - 
+        ```HDL
+            CHIP Mux {
+                IN a, b, sel;
+                OUT out;
+
+                PARTS:
+                Not(in=sel, out=Notsel);
+                And(a=a, b=Notsel, out= aAndNotsel);
+                And(a=b, b=sel, out=bAndsel);
+                Or(a=aAndNotsel, b=bAndsel, out=out);
+                
+            }
+        ```

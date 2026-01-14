@@ -43,4 +43,39 @@
 - integer types are implictly declared signed unless prepended otherwise
     - except for char
         - C allows the compiler creator to decide whether char is signed or unsigned by default
-        - compiler **must** treat it as signed otherwise
+    - compiler **must** treat it as signed otherwise
+
+#### Unsigned Integers
+- start at 0 and have larger ranges than their signed counterparts
+
+##### Representation 
+- quite easy to understand as it's represented in pure binary
+    -   | Decimal | Binary | Hexadecimal |
+        | :--- | :--- | :--- |
+        | 10 | 0000 1010 | 0x0A |
+        | 64 | 0100 0000 | 0x40 |
+        | 127 | 0111 1111 | 0x7F |
+        | 128 | 1000 0000 | 0x80 |
+        | 200 | 1100 1000 | 0xC8 |
+        | 240 | 1111 0000 | 0xF0 |
+- range of types is $2^N - 1$
+    - where N is the width
+
+##### Wraparound
+- this happens when you try to go beyond the width of the type
+- in certain encryption algorithms this behaviour can actually be intentional
+- it's important to be aware of this behaviour as in unsigned cases values can never be below 0
+
+#### Signed Integers
+- every unsigned int type has a signed counterpart that takes _the same space_
+    - except `_Bool`
+
+##### Representation
+- C supports 3 different representation schemes
+    - though the second is the most commonly used
+    1. **Sign and magnitude**
+    2. **Ones' compliment**
+    3. **Two's compliment**
+*todo*
+
+
