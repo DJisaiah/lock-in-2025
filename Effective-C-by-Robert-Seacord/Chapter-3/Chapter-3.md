@@ -74,8 +74,39 @@
 - C supports 3 different representation schemes
     - though the second is the most commonly used
     1. **Sign and magnitude**
+        - this is the one we're most familiar with
+        - left-most bit (the high-order bit) indicates sign and the rest the value in pure binary
+            - left-most
+                - 0 = positive
+                - 1 = negative
+        - The issue here is that it also makes addition/subtraction in this format more complicated
+            - we can no longer perform machine efficient binary addition of the two binary numbers
+                - as that can lead to unexpected behaviour in mismatched signs and values
+                - so then the computer has to consider cases which is inefficient
+        - other issues:
+            - less bits to represent values
+            - we also have two values representing 0 ( +0 and -0 ) which means cpu has to check both for `x == 0`
     2. **Ones' compliment**
+        - How it works:
+            - Positive numbers 
+                - first bit has to be 0 though
+                - Works exactly like signed binary
+            - Negative numbers
+                - first bit has to be 1
+                - we look at the positive signed version, and we flip every bit (0 becomes 1 and vice versa)
+                    - this is called bitwise complement
+        - in this case the weight of the high-order bit becomes $-(2^{N-1} - 1)$
+            - If you take any 4-bit number $x$ and its bitwise complement $\bar{x}$ (the flipped version), adding them together **always** results in all ones (`1111`).
+            - In unsigned binary, `1111` is **15**, which is $2^4 - 1$. Generally, for $N$ bits, all ones is $2^N - 1$.
+            - So we have this identity:
+                - $$x + \bar{x} = 2^N - 1$$
+            - If we want the flipped version ($\bar{x}$) to behave like the negative version ($-x$), we rearrange the math:
+                - $$-x = \bar{x} - (2^N - 1)$$
+            - then of course in the signed case we lose a bit so it becomes $2^{N-1}$
+                - For a 4-bit system ($N = 4$):
+                    * Standard weight of the 4th bit:** $2^{4-1} = 8$.
+                    * The "offset" required for symmetry:** $2^4 - 1 = 15$.
+                    * The "Hacked" Weight:** $8 - 15 = -7$.
     3. **Two's compliment**
-*todo*
 
 
