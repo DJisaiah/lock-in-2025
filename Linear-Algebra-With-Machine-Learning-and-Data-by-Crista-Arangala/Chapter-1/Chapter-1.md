@@ -147,6 +147,29 @@
 
 //
 
+##### An alternative to splitting up a graph
+
+- Edge boundary (or Out-going edges relative to a subgroup)
+    - $\partial(V_1) = \{ (v_1, v_2) \in \mathbf{E} : v_1 \in V_1, v_2 \in V \setminus V_1 \}$
+    - This allows us to form a set of pairs (of vertices) from a subgroup, to the rest o the graph (which would be $G_2$)
+    - The magnitude of this allows us to see the number of those pairs
+
+- Isoperimetric ratio
+    - $\theta(V_1) = \frac{|\partial(V_1)|}{|V_1|}$
+    - This is a ratio of the edge boundary to the source subgroup
+        - This can allow us to see where an efficient cut can take place
+
+- Isoperimetric number
+    - $\theta_G = \min_{|V_1| \leq \frac{|V|}{2}} \frac{|\partial(V_1)|}{|V_1| |V_2|}$
+        - we see the product in the denominator to ensure the cut is meaningful in context of the graph
+    - This is the minimum isoperimetric ratio
+        - i.e. the most efficient place to cut
+    - $V_1$ can at most be half $V$
+
+**The Single Denominator ($|V_1|$):** Measures the sparsity of the boundary relative to the cluster size.
+
+**The Product Denominator ($|V_1||V_2|$):** Measures the sparsity of the boundary while **rewarding balance** between the two subgraphs.
+
 ---
 ### Chapter 1.6 Exercises
 

@@ -76,8 +76,24 @@
 - Multi-bit gates are basically just expanding the array of an input 
     - it would still be one input say `a` but the number of bits has increased (8, 16...)
 
-- Multi-way gates
-    - based on the idea of multi-bit gates except we perform the operation on all of them simultaneously
+##### Multi-way gates
+> based on the idea of multi-bit gates except we perform the operation on all of them simultaneously
+
+- Multi-way Or
+    - Basically Or with m inputs
+
+- Multi-way Mux (multiplexor)
+    - structure
+        - $m$ $n$-bit input bits
+        - $k$ selection bits
+            - $k = \log_2 m$
+                - this makes more sense when you look at the truth table (4-way mux example)
+                    - | sel[1] | sel[0] | out |
+                        | :---: | :---: | :---: |
+                        | 0 | 0 | a |
+                        | 0 | 1 | b |
+                        | 1 | 0 | c |
+                        | 1 | 1 | d |
 
 - We can realise our gates:
     1. with a boolean function in a truth table (for our simpler cases)
@@ -234,7 +250,7 @@
         ```
 
 - And16
-    - 
+    - implementation
     ```HDL
             CHIP And16 {
                 IN a[16], b[16];
@@ -261,7 +277,7 @@
     ```
 
 - Or16
-    - 
+    - implementation
     ```HDL
             CHIP Or16 {
                 IN a[16], b[16];
@@ -287,3 +303,66 @@
             }
     ```
 - Multi-bit multiplexer
+    - implementation
+    ```HDL
+            CHIP Mux16 {
+                IN a[16], b[16], sel;
+                OUT out[16];
+
+                PARTS:
+                Mux(a= a[0], b= b[0], sel=sel, out=out[0]);
+                Mux(a= a[1], b= b[1], sel=sel, out=out[1]);
+                Mux(a= a[2], b= b[2], sel=sel, out=out[2]);
+                Mux(a= a[3], b= b[3], sel=sel, out=out[3]);
+                Mux(a= a[4], b= b[4], sel=sel, out=out[4]);
+                Mux(a= a[5], b= b[5], sel=sel, out=out[5]);
+                Mux(a= a[6], b= b[6], sel=sel, out=out[6]);
+                Mux(a= a[7], b= b[7], sel=sel, out=out[7]);
+                Mux(a= a[8], b= b[8], sel=sel, out=out[8]);
+                Mux(a= a[9], b= b[9], sel=sel, out=out[9]);
+                Mux(a= a[10], b= b[10], sel=sel, out=out[10]);
+                Mux(a= a[11], b= b[11], sel=sel, out=out[11]);
+                Mux(a= a[12], b= b[12], sel=sel, out=out[12]);
+                Mux(a= a[13], b= b[13], sel=sel, out=out[13]);
+                Mux(a= a[14], b= b[14], sel=sel, out=out[14]);
+                Mux(a= a[15], b= b[15], sel=sel, out=out[15]);
+            }
+    ```
+
+- Multi-way Or
+    - implementation
+    ```HDL
+            CHIP Or8Way {
+                IN in[8];
+                OUT out;
+
+                PARTS:
+                Or(a=in[0], b=in[1], out=out1);
+                Or(a=out1, b=in[2], out=out2);
+                Or(a=out2, b=in[3], out=out3);
+                Or(a=out3, b=in[4], out=out4);
+                Or(a=out4, b=in[5], out=out5);
+                Or(a=out5, b=in[6], out=out6);
+                Or(a=out6, b=in[7], out=out);
+            }
+    ```
+
+- 4-Way Mux16
+    - analysing the truth table to form cases for each helped
+        - realising sel[0] formed the selector for the a&b then c&d
+        - sel[1] formed the selector between the winner of those two groups
+    - implementation
+    ```HDL
+            CHIP Mux4Way16 {
+                IN a[16], b[16], c[16], d[16], sel[2];
+                OUT out[16];
+                
+                PARTS:
+                Mux16(a=a, b=b, sel=sel[0], out=outAB);
+                Mux16(a=c, b=d, sel=sel[0], out=outCD);
+                Mux16(a=outAB, b=outCD, sel=sel[1], out=out);
+            }
+    ```
+
+- 8-Way Mux16
+    - probably similar logic to above..
