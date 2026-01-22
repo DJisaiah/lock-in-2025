@@ -163,7 +163,36 @@ public class InsertionSort {
 ```
 
 ```bash
-java InsertionSort.java
+java InsertionSort
 [1, 12, 22, 55, 90, 300]
 [Apple, Banana, Cranberry, Diner, Xylophone]
 ```
+##### Performance
+
+###### Best case $N$
+- When the array is sorted insertion sort's running time is linear (or when all keys are the same)
+    - Imagine an array `[1, 2, 3, 4, 5]`. Let's trace the work:
+        * $i = 1$: Compare `2` and `1`. Is $2 < 1$? **No.** Inner loop terminates immediately.
+        * $i = 2$: Compare `3` and `2`. Is $3 < 2$? **No.** Inner loop terminates immediately.
+        * $i = 3$: Compare `4` and `3`. Is $4 < 3$? **No.** Inner loop terminates immediately.
+        * $i = 4$: Compare `5` and `4`. Is $5 < 4$? **No.** Inner loop terminates immediately.
+
+###### Worst Case ~$N^2/2$
+- When the array is in reverse order
+    - Algorithm has to do a full $\frac{(N - 1)(N - i)}{2}$
+
+###### Average Case ~$N^2/4$
+- Rectangle model
+    - So the width would be (N - 1)
+    - the length would be (N - i)
+    - but of course i need to divide that whole expression by 2 since this is not a full rectangle. 
+    - Then i remembered that we would only be doing abt half the necessary work in the inner loop in the average case so divide (N-i) by 2 in the original expression 
+- Accurate Expression (*called Exact Complexity*):
+    - $$\frac{(N - 1) \times \frac{(N - i)}{2}}{2} = \frac{(N - 1)(N - i)}{4}$$
+- Tilde Notation:
+    - ~$N^2/4$
+- Big O:
+    - $N^2$
+- note
+    - it didnt matter whether we chose the exchanges or comparisons as they had the same growth rate
+    - unique for insertion sort
