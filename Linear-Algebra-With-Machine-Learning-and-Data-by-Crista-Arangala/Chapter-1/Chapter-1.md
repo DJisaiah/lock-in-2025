@@ -166,6 +166,8 @@
         - i.e. the most efficient place to cut
     - $V_1$ can at most be half $V$
 
+- We can use the fiedler vector to find closely related vectors
+
 **The Single Denominator ($|V_1|$):** Measures the sparsity of the boundary relative to the cluster size.
 
 **The Product Denominator ($|V_1||V_2|$):** Measures the sparsity of the boundary while **rewarding balance** between the two subgraphs.
