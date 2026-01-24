@@ -108,5 +108,9 @@
                     * The "offset" required for symmetry:** $2^4 - 1 = 15$.
                     * The "Hacked" Weight:** $8 - 15 = -7$.
     3. **Two's compliment**
+        - //todo
+- The representation used is determined by the implementers of C for the system (creators of the compiler)
+    - though two's compliment is the direction we're moving in and is most used
+
 
 
