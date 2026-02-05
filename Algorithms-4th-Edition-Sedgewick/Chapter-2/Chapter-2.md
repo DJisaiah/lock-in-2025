@@ -49,7 +49,7 @@
             - in our case we find it useful to also have methods like `less` and `exch`
     
 ---
-#### Selection sort
+#### Selection sort "Look ahead and select, then swap."
 
 ##### the idea is: 
 1. at each iteration find the minimum (on first assume first)
@@ -87,8 +87,16 @@ public static void selectionSort(Comparable[] arr) {
 ##### proof
 
 *selection sort has $N^2/2$ compares and $N$ exchanges*
-
 N exchanges because on each loop there's just one exchange
+- this is true for average, best, and worst case (in the standard implementation as we see in sedgewick)
+    - if we consider an optimised version then in the best case we can enjoy 0 exchanges
+        - checking if the min index we're swapping with is the one we started with
+
+| Operation | Best Case | Average Case | Worst Case |
+| :--- | :--- | :--- | :--- |
+| **Comparisons** | $\sim \frac{1}{2} N^2$ | $\sim \frac{1}{2} N^2$ | $\sim \frac{1}{2} N^2$ |
+| **Exchanges** | $N$ | $N$ | $N$ |
+
 
 The inner loop of Selection Sort starts at `j = i + 1` and runs to the end of the array ($N$). As the outer loop index $i$ increases, the inner loop has fewer elements to check:
 
@@ -120,12 +128,14 @@ To find the area of this "triangle," you can imagine taking a second identical s
 
 *naturally we can also remember our summation formulas from high school (see top) from high school*
 
-#### Insertion sort 
+#### Insertion sort "Insert into place behind us, swapping inside pairs."
 
 ##### the idea is:
 1. Start at index 1 (i)
-2. Then look at values behind i to see if theyre bigger than the value at i (j)
-3. Go all the way back til the beginning of the array (j > 0)
+2. Then look at values to the left of i to see if theyre bigger than the value at i (j)
+    - essentially comparing pairs
+        - if one of them is smaller swap with the bigger one in the pair
+3. Go all the way to the left til the beginning of the array (j > 0)
 4. Repeat this process until we reach the end of the array
 
 ##### implementation:
@@ -179,16 +189,16 @@ java InsertionSort
 
 ###### Worst Case ~$N^2/2$
 - When the array is in reverse order
-    - Algorithm has to do a full $\frac{(N - 1)(N - i)}{2}$
+    - Algorithm has to do a full $\frac{(N - 1)(N - 1)}{2}$
 
 ###### Average Case ~$N^2/4$
 - Rectangle model
     - So the width would be (N - 1)
-    - the length would be (N - i)
+    - the length would be (N - 1)
     - but of course i need to divide that whole expression by 2 since this is not a full rectangle. 
     - Then i remembered that we would only be doing abt half the necessary work in the inner loop in the average case so divide (N-i) by 2 in the original expression 
 - Accurate Expression (*called Exact Complexity*):
-    - $$\frac{(N - 1) \times \frac{(N - i)}{2}}{2} = \frac{(N - 1)(N - i)}{4}$$
+    - $$\frac{(N - 1) \times \frac{(N - 1)}{2}}{2} = \frac{(N - 1)(N - 1)}{4}$$
 - Tilde Notation:
     - ~$N^2/4$
 - Big O:

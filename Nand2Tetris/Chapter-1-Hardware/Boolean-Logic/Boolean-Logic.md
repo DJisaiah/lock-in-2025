@@ -365,4 +365,58 @@
     ```
 
 - 8-Way Mux16
-    - probably similar logic to above..
+    - implementation
+    ```HDL
+            /**
+             * 8-way 16-bit multiplexor:
+             * out = a if sel = 000
+             *       b if sel = 001
+             *       c if sel = 010
+             *       d if sel = 011
+             *       e if sel = 100
+             *       f if sel = 101
+             *       g if sel = 110
+             *       h if sel = 111
+             */
+            CHIP Mux8Way16 {
+                IN a[16], b[16], c[16], d[16],
+                   e[16], f[16], g[16], h[16],
+                   sel[3];
+                OUT out[16];
+
+                PARTS:
+                Mux4Way16(a=a, b=b, c=c, d=d, sel=sel[0..1], out=ABCD);
+                Mux4Way16(a=e, b=f, c=g, d=h, sel=sel[0..1], out=EFGH);
+                Mux16(a=ABCD, b=EFGH, sel=sel[2], out=out);
+                
+            }
+    ```
+
+- 4WayDmux
+    - implementation 1
+    ```HDL
+             * 4-way demultiplexor:
+             * [a, b, c, d] = [in, 0, 0, 0] if sel = 00
+             *                [0, in, 0, 0] if sel = 01
+             *                [0, 0, in, 0] if sel = 10
+             *                [0, 0, 0, in] if sel = 11
+             */
+            CHIP DMux4Way {
+                IN in, sel[2];
+                OUT a, b, c, d;
+
+                PARTS:
+                Not(in=sel[0], out=NotSel0);
+                Not(in=sel[1], out=NotSel1);
+                And(a=sel[1], b=sel[0], out=outd);
+                And(a=sel[1], b=NotSel0, out=outc);
+                And(a=NotSel1, b=sel[0], out=outb);
+                And(a=NotSel0, b=NotSel1, out=outa);
+                And(a=in, b=outd, out=d);
+                And(a=in, b=outc, out=c);
+                And(a=in, b=outb, out=b);
+                And(a=in, b=outa, out=a);
+            }
+    ```
+    - implementation 2
+        - wip
