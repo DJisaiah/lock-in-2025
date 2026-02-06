@@ -151,22 +151,43 @@
 
 - Edge boundary (or Out-going edges relative to a subgroup)
     - $\partial(V_1) = \{ (v_1, v_2) \in \mathbf{E} : v_1 \in V_1, v_2 \in V \setminus V_1 \}$
+    - theory:
+        - This is just a filter
+        - If you split the graph into two groups $V_1$ and $V_2$
+        - the boundary is the set of all existing edges that have one foot in $V_1 and the other in $V_2$​
     - This allows us to form a set of pairs (of vertices) from a subgroup, to the rest o the graph (which would be $G_2$)
     - The magnitude of this allows us to see the number of those pairs
 
 - Isoperimetric ratio
     - $\theta(V_1) = \frac{|\partial(V_1)|}{|V_1|}$
+    - theory:
+        - This is an *efficiency score* for a specific cut
+        - It asks: "How many edges did I have to cut ($|\partial(V_1)|$) relative to how many nodes I isolated ($|V_1|$ or $|V_1||V_2|$)?".
     - This is a ratio of the edge boundary to the source subgroup
         - This can allow us to see where an efficient cut can take place
 
 - Isoperimetric number
     - $\theta_G = \min_{|V_1| \leq \frac{|V|}{2}} \frac{|\partial(V_1)|}{|V_1| |V_2|}$
         - we see the product in the denominator to ensure the cut is meaningful in context of the graph
-    - This is the minimum isoperimetric ratio
-        - i.e. the most efficient place to cut
+    - This is the minimum isoperimetric ratio (global minimum)
+        - i.e. the most efficient place to cut (most efficient bottleneck)
     - $V_1$ can at most be half $V$
 
 - We can use the fiedler vector to find closely related vectors
+    - Instead of guessing traits w/o fiedler we can use *spectral sweeping*
+        - tells us which sets to check
+    - The idea:
+        1. **Sort the nodes** based on their value in the Fiedler vector.
+        2. **Only test "Prefix" subsets** of that sorted list.
+            * If the sorted nodes are $\{N_{10}, N_9, N_8, N_1, \dots\}$, you only calculate the ratios for:
+                * $V_1 = \{N_{10}\}$
+                * $V_1 = \{N_{10}, N_9\}$
+                * $V_1 = \{N_{10}, N_9, N_8\}$
+                * ...and so on.
+        - By doing this, you reduce the number of calculations from "every possible trait" down to just $n/2$ calculations. You can ignore the thousands of other possible node combinations because the math guarantees they won't be the minimum.
+    - How
+        - The reason it works is that the Fiedler vector acts as a spatial map that translates the "connectedness" of the graph into a physical distance on a line.
+        - recall that the fiedler vector ranks nodes together by the way of the gap between their values
 
 **The Single Denominator ($|V_1|$):** Measures the sparsity of the boundary relative to the cluster size.
 
@@ -296,4 +317,10 @@ $$
 
 
 #### 5
-
+![ex5](media/problems1ex5.jpeg)
+thinking explained:
+1. We first start off by realising the isoperimetric number has a max vertex size of half the number of vertices so we get 5
+2. We then consider cases of sets from size 1-5
+3. In those cases instead of testing every single possibility we consider only the traits as it saves a lot of time and you get the same results
+4. We then calculate the isoperimetric number for each set in each size 
+5. Then we find our global min from that and get our result
