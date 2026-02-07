@@ -419,4 +419,35 @@
             }
     ```
     - implementation 2
-        - wip
+    ```HDL
+        CHIP DMux4Way {
+            IN in, sel[2];
+            OUT a, b, c, d;
+
+            PARTS:
+            DMux(in=in, sel=sel[1], a=caseAB, b=caseCD);
+            DMux(in=caseAB, sel=sel[0], a=a, b=b);
+            DMux(in=caseCD, sel=sel[0], a=c, b=d);
+        }
+    ```
+    - realised this solution through analysing the results of input 1 case
+        - when is d,c,b,a 1?
+        - we then realise we can split those into cases where ab or cd is 1, then the other pair must be zero
+        - and voila!
+
+- DMux8Way
+    - implementation
+    ```HDL
+            CHIP DMux8Way {
+                IN in, sel[3];
+                OUT a, b, c, d, e, f, g, h;
+
+                PARTS:
+                DMux(in=in, sel=sel[2], a=caseABCD, b=caseEFGH);
+                DMux4Way(in=caseABCD, sel=sel[0..1], a=a, b=b, c=c, d=d);
+                DMux4Way(in=caseEFGH, sel=sel[0..1], a=e, b=f, c=g, d=h);
+            }
+    ```
+    - realise here that sel[2] is the one that decides which group ABCD gets to be 1 and then from there it's just a DMux4Way
+        - again just analysed the table
+            - very useful to put selector logic in growing numbers in terms of binary (2..4..6...)

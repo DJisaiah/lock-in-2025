@@ -5,6 +5,25 @@
 ![high school sum formulas](https://mathswithdavid.com/wp-content/uploads/2021/08/image-43.png)
 *(source: mathswithdavid)*
 
+- Inversions
+    - this refers to pairs that are out of order (E-A, A should be before A)
+
+- Partially sorted array
+    - This is when the number of inversions is *less* than a *constant* multiple of the array size
+        - what this means in practice is
+            - the growth rate of the number of inversions in relation to the size of N, does not change
+                - the growth rate is **linear**
+    - table
+        | Array Size ($N$) | Definition of "Partially Sorted" ($10N$) | Definition of "Random" ($N^2 / 4$) |
+        | :--- | :--- | :--- |
+        | **100** | 1,000 inversions (10 per item) | 2,500 inversions (25 per item) |
+        | **1,000** | 10,000 inversions (Still 10 per item) | 250,000 inversions (250 per item!) |
+        | **1,000,000** | 10,000,000 inversions (Still 10 per item) | 250,000,000,000 inversions (250,000 per item!!) |
+    - visually we see:
+        - an array where each entry is not far from its rightful place
+        - a small array appended to a large sorted array
+        - an array with only a small number of entries that arent in place
+
 ##### `Comparable` interface
 - **why**
     - java does not support operator overloading and so we cannot compare non-primitives with `>` and `<`
@@ -128,7 +147,7 @@ To find the area of this "triangle," you can imagine taking a second identical s
 
 *naturally we can also remember our summation formulas from high school (see top) from high school*
 
-#### Insertion sort "Insert into place behind us, swapping inside pairs."
+#### Insertion sort "Let me insert myself into this line, 1 ahead to stay humble, then judge those behind me back to the beginning to see where i stand, ctsly move up."
 
 ##### the idea is:
 1. Start at index 1 (i)
@@ -206,3 +225,29 @@ java InsertionSort
 - note
     - it didnt matter whether we chose the exchanges or comparisons as they had the same growth rate
     - unique for insertion sort
+
+- *insertion sort is efficient for partially sorted arrays and fine for small arrays*
+
+
+##### Optimisation (faster memory operations -> faster cpu)
+- Insertion sort can be optimised in it's assignments/exchanges
+    - instead of doing 3 assignments every time we exchange for each larger neighbour we can:
+        -  instead of exchanging for each lesser, put our candidate in a temp box, if we find a larger neighbour shift it up until there aren't any larger ones, then put the temp in the leftover space
+        - this way we shift from moving two items every larger neighbour, we only move one (this cuts the work/array accesses in half)
+
+```java
+T temp = a[i]; // Pick up the candidate
+int j = i;
+while (j > 0 && less(temp, a[j-1])) {
+    a[j] = a[j-1]; // Just shift the neighbor right
+    j--;
+}
+a[j] = temp; // Drop the candidate in the hole
+```
+#### Shell sort
+
+- A great optimisation of insertion sort
+    - where insertion lacks in that it only does adjacent swaps, shellsort looks ahead and does n/(implementation dependent) gap sorts
+    - it does this until there is only a gap of 1
+        - which is insertion sort's most efficient state
+    - much faster than regular insertion sort for large arrays
